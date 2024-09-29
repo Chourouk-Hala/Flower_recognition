@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <title>Input Image With Preview Image</title>
+</head>
+<body>
+    <div class="father">
+        <div class="container">
+            <form id="upload-form" action="{% url 'make_prediction' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="file" id="file" name="image" accept="image/*" hidden>
+                <div class="img-area" data-img="">
+                    <i class='bx bxs-cloud-upload icon'></i>
+                    <h3>Upload Image</h3>
+                    <p>Image size must be less than <span>2GB</span></p>
+                </div>
+                <label class="cc">Enter the real class:</label>
+                <input class="tt" type="text" name="real_class">
+                <button class="select-image" type="button">Select Image</button>
+                <button class="submit" type="submit" id="submit">Submit</button>
+            </form>
+        </div>
+
+        <div id="output">
+            <label class="cc">The predicted class is:</label>
+            <input class="tt" type="text" value="{{ class_idx }}" >
+            <br>
+            <label class="cc">The real class is:</label>
+            <input class="tt" type="text" value="{{ class_name }}">
+        </div>
+    </div>
+
+    <script src="{% static 'script.js' %}"></script>
+    <script>
+        document.getElementById("output").style.visibility = 'visible';
+        var btn = document.getElementById("submit");
+        btn.addEventListener('click', function () {
+            document.getElementById("output").style.visibility = 'visible';
+        });
+    </script>    
+</body>
+</html>
